@@ -4,7 +4,6 @@ import os
 import noteslib
 
 sleep_sec = 0.25
-prev = None
 
 cache_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "notes-cache")
 
