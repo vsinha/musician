@@ -1,33 +1,21 @@
-import random
 import time
 from gtts import gTTS
 import os
-from noteslib import natural_notes
+import noteslib
 
 sleep_sec = 0.25
 prev = None
 
+cache_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "notes-cache")
+
 
 def filename(note):
-    return note + ".mp3"
+    return os.path.join(cache_dir, "spoken-" + note + ".mp3")
 
 
 def generate_file(note):
     obj = gTTS(note, lang="en", slow=False)
     obj.save(filename(note))
-
-
-def pick_random(notes):
-    global prev
-    note = random.choice(notes)
-
-    if prev is not None and prev == note:
-        # Reduce the chance of repeats
-        note = random.choice(notes)
-
-    prev = note
-
-    return note
 
 
 def speak(note):
@@ -40,7 +28,10 @@ def speak(note):
     os.system("mpg321 --quiet " + file)
 
 
-while True:
-    note = pick_random(natural_notes)
-    speak(note)
-    time.sleep(sleep_sec)
+if __name__ == "__main__":
+    os.mkdir(cache_dir)
+
+    while True:
+        note = noteslib.pick_random(noteslib.natural_notes)
+        speak(note)
+        time.sleep(sleep_sec)

@@ -1,3 +1,5 @@
+import random
+
 natural_notes: list[str] = ["A", "B", "C", "D", "E", "F", "G"]
 
 all_notes = [
@@ -30,3 +32,21 @@ frequencies = {
     "G": 783.99,
     "G#": 830.61,
 }
+
+
+previous_pick = None
+
+
+def pick_random(notes, never_repeats=False):
+    global previous_pick
+    note = random.choice(notes)
+    if never_repeats:
+        while note == previous_pick:
+            note = random.choice(notes)
+    else:
+        if previous_pick == note:
+            # Reduce the chance of repeats
+            note = random.choice(notes)
+
+    previous_pick = note
+    return note

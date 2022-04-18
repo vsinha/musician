@@ -36,5 +36,4 @@ def get_scale(key, which_scale):
     # we want our scale to not re-include the note we started with
     notes = notes[:-1]
 
-    print("key:", key, which_scale, ", notes:", notes)
     return notes
