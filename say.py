@@ -1,14 +1,11 @@
-#!/opt/homebrew/bin/python3
-
 import random
 import time
 from gtts import gTTS
 import os
+from noteslib import natural_notes
 
 sleep_sec = 0.25
 prev = None
-
-natural_notes: list[str] = ["A", "B", "C", "D", "E", "F", "G"]
 
 
 def filename(note):
