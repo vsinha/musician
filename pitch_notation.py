@@ -33,7 +33,13 @@ def pitch(note_integer):
     return 69 + 12 * log2(note_integer / 440)
 
 
-chords = {"dominant": [0, 4, 7, 10]}
+chords = {
+    "major": [0, 4, 7],
+    "major seventh": [0, 4, 7, 11],
+    "minor": [0, 3, 7],
+    "minor seventh": [0, 3, 7, 10],
+    "dominant": [0, 4, 7, 10],
+}
 
 
 def get_chord(root: int):
