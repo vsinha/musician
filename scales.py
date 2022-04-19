@@ -39,8 +39,4 @@ def scale(root: notes.Note, which_scale):
         note = note.transpose(increment)
         scale.append(note)
 
-    # we want our scale to not re-include the note we started with
-    # TODO maybe we do want the root one octave up... idk yet
-    scale = scale[:-1]
-
     return scale

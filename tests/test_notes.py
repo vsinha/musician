@@ -24,5 +24,9 @@ class Test(unittest.TestCase):
         self.assertEqual(Note(3, octave=2), "D#2")
 
     def test_frequency(self):
-        self.assertEqual(Note("A").frequency(), 440.0)
-        self.assertAlmostEqual(Note("B").frequency(), 493.88, places=2)
+        self.assertAlmostEqual(Note("A3").frequency(), 220.00, places=2)
+        self.assertAlmostEqual(Note("B3").frequency(), 246.94, places=2)
+        self.assertAlmostEqual(Note("C").frequency(), 261.63, places=2)
+        self.assertAlmostEqual(Note("D").frequency(), 293.66, places=2)
+        self.assertAlmostEqual(Note("A").frequency(), 440.0, places=2)
+        self.assertAlmostEqual(Note("C5").frequency(), 523.25, places=2)

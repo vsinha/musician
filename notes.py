@@ -76,9 +76,10 @@ class Note:
         else:
             return False
 
-    # https://en.wikipedia.org/wiki/Pitch_class#Integer_notation
+    # https://davywybiral.blogspot.com/2010/09/procedural-music-with-pyaudio-and-numpy.html
     def frequency(self):
-        return 440.0 * 2.0 ** ((self.index - 9) / 12)
+        base_frequency = 16.35159783128741 * 2.0 ** (float(self.index) / 12.0)
+        return base_frequency * (2.0 ** self.octave)
 
     def transpose(self, halfsteps):
         octave_delta, note = divmod(self.index + halfsteps, 12)
