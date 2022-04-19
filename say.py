@@ -2,6 +2,7 @@ import time
 from gtts import gTTS
 import os
 import noteslib
+from pick_random import pick_random
 
 sleep_sec = 0.25
 
@@ -18,8 +19,6 @@ def generate_file(note):
 
 
 def speak(note):
-    print(note)
-
     file = filename(note)
     if not os.path.exists(file):
         generate_file(note)
@@ -31,6 +30,6 @@ if __name__ == "__main__":
     os.mkdir(cache_dir)
 
     while True:
-        note = noteslib.pick_random(noteslib.natural_notes)
+        note = pick_random(noteslib.natural_note_names)
         speak(note)
         time.sleep(sleep_sec)

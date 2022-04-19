@@ -10,7 +10,7 @@ scales = {
 }
 
 
-def get_scale(key, which_scale):
+def scale(root: noteslib.Note, which_scale):
     steps = scales[which_scale]
     increments = []
 
@@ -22,18 +22,25 @@ def get_scale(key, which_scale):
         elif char == "H":
             increments.append(1)
         else:
-            print("Something's wrong, got a ", char)
+            raise Exception(
+                "Unexpected character when trying to construct a scale:",
+                char,
+                "root: ",
+                root,
+                "steps: ",
+                steps,
+            )
 
-    # find our starting index
-    idx = noteslib.all_notes.index(key)
+    # starting at the root
+    id = root.id
 
-    notes = [key]
+    notes = [root]
     for increment in increments:
-        idx = (idx + increment) % len(noteslib.all_notes)
-        note = noteslib.all_notes[idx]
-        notes.append(note)
+        id = id + increment
+        notes.append(noteslib.Note.of_id(id))
 
     # we want our scale to not re-include the note we started with
+    # TODO maybe we do want the root one octave up... idk yet
     notes = notes[:-1]
 
     return notes

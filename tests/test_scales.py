@@ -1,15 +1,16 @@
 import unittest
-from scales import get_scale
+from noteslib import Note
+from scales import scale
 
 
 class Tests(unittest.TestCase):
     def test_creating_some_scales(self):
         self.assertListEqual(
-            get_scale("C", "major"), ["C", "D", "E", "F", "G", "A", "B"]
+            scale(Note("C"), "major"), ["C", "D", "E", "F", "G", "A", "B"]
         )
         self.assertListEqual(
-            get_scale("A", "minor"), ["A", "B", "C", "D", "E", "F", "G"]
+            scale(Note("A"), "minor"), ["A", "B4", "C5", "D5", "E5", "F5", "G5"]
         )
         self.assertListEqual(
-            get_scale("A", "major"), ["A", "B", "C#", "D", "E", "F#", "G#"]
+            scale(Note("A"), "major"), ["A", "B4", "C#5", "D5", "E5", "F#5", "G#5"]
         )

@@ -2,6 +2,7 @@ import time
 import pyaudio
 import numpy as np
 import noteslib
+from pick_random import pick_random
 import scales
 
 volume = 0.5  # range [0.0, 1.0]
@@ -21,13 +22,13 @@ def play_note(note, stream):
 
 if __name__ == "__main__":
 
-    scale = scales.get_scale("A", "pentatonic")
+    scale = scales.scale(noteslib.Note("A"), "pentatonic")
 
     p = pyaudio.PyAudio()
     stream = p.open(format=pyaudio.paFloat32, channels=1, rate=fs, output=True)
 
     while True:
-        note = noteslib.pick_random(scale, never_repeats=True)
+        note = pick_random.pick_random(scale, never_repeats=True)
         play_note(note, stream)
         time.sleep(0.5)
 
