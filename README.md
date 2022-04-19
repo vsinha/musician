@@ -2,8 +2,9 @@ Experimenting with some music theory primitives. Maybe building towards some too
 
 ```
 # try
-python play.py
-python say.py
+python play.py   # play a scale
+python say.py    # say random notes in english
+python tone.py   # play some notes
 
 # test
 python -m unittest discover
