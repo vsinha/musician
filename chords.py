@@ -10,4 +10,4 @@ chords = {
 
 
 def chord(root: Note, chord):
-    return [Note.of_id(root.id + note) for note in chords[chord]]
+    return [root.transpose(halfsteps) for halfsteps in chords[chord]]

@@ -32,12 +32,12 @@ def scale(root: notes.Note, which_scale):
             )
 
     # starting at the root
-    id = root.id
+    note = root
 
-    scale = [root]
+    scale = [note]
     for increment in increments:
-        id = id + increment
-        scale.append(notes.Note.of_id(id))
+        note = note.transpose(increment)
+        scale.append(note)
 
     # we want our scale to not re-include the note we started with
     # TODO maybe we do want the root one octave up... idk yet
