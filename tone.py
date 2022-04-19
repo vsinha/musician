@@ -1,16 +1,19 @@
+import functools
 import math
-import numpy
+import operator
+import numpy as np
 import pyaudio
 from notes import Note
 import scales
+import chords
 from scipy import interpolate
 from operator import itemgetter
 
 
-def sine(frequency, length, rate):
+def sine(frequency, length, rate) -> np.ndarray:
     length = int(length * rate)
     factor = float(frequency) * (math.pi * 2) / rate
-    return numpy.sin(numpy.arange(length) * factor)
+    return np.sin(np.arange(length) * factor)
 
 
 def shape(data, points, kind="slinear"):
@@ -20,7 +23,7 @@ def shape(data, points, kind="slinear"):
     vals = list(map(itemgetter(1), items))
     interp = interpolate.interp1d(keys, vals, kind=kind)
     factor = 1.0 / len(data)
-    shape = interp(numpy.arange(len(data)) * factor)
+    shape = interp(np.arange(len(data)) * factor)
     return data * shape
 
 
@@ -47,6 +50,11 @@ def pluck2(note, length=1.0):
     return shape(chunk, {0.0: 0.0, 0.5: 0.75, 0.8: 0.4, 1.0: 0.1})
 
 
+def chord(notes, length):
+    freqs = [sine(note.frequency(), length, 44100) for note in notes]
+    return functools.reduce(operator.add, freqs) * 0.2
+
+
 def play_scale_batch():
     root = Note("A", 3)
     scale = scales.scale(root, "major")
@@ -54,12 +62,13 @@ def play_scale_batch():
     chunks = []
 
     for note in scale:
-        chunks.append(pluck1(note, length=0.25))
+        c = chord(chords.chord(note, "major"), length=0.5)
+        chunks.append(c)
 
-    chunk = numpy.concatenate(chunks) * 0.25
+    chunk = np.concatenate(chunks) * 0.25
     p = pyaudio.PyAudio()
     stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=True)
-    stream.write(chunk.astype(numpy.float32).tobytes())
+    stream.write(chunk.astype(np.float32).tobytes())
     stream.close()
     p.terminate()
 
@@ -73,7 +82,10 @@ def play_scale_unbatched():
 
     for note in scale:
         chunk = pluck1(note, length=0.25)
-        stream.write(chunk.astype(numpy.float32).tobytes())
+        stream.write(chunk.astype(np.float32).tobytes())
 
     stream.close()
     p.terminate()
+
+
+play_scale_unbatched()
