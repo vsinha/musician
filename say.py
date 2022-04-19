@@ -1,7 +1,7 @@
 import time
 from gtts import gTTS
 import os
-import noteslib
+import notes
 from pick_random import pick_random
 
 sleep_sec = 0.25
@@ -30,6 +30,6 @@ if __name__ == "__main__":
     os.mkdir(cache_dir)
 
     while True:
-        note = pick_random(noteslib.natural_note_names)
+        note = pick_random(notes.natural_note_names)
         speak(note)
         time.sleep(sleep_sec)

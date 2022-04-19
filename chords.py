@@ -1,4 +1,4 @@
-from noteslib import Note
+from notes import Note
 
 chords = {
     "major": [0, 4, 7],

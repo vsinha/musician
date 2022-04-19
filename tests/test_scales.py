@@ -1,5 +1,5 @@
 import unittest
-from noteslib import Note
+from notes import Note
 from scales import scale
 
 

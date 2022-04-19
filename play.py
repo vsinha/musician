@@ -1,7 +1,7 @@
 import time
 import pyaudio
 import numpy as np
-import noteslib
+import notes
 from pick_random import pick_random
 import scales
 
@@ -11,7 +11,7 @@ duration = 3.0  # in seconds, may be float
 
 
 def play_note(note, stream):
-    f = noteslib.frequencies[note] / 2
+    f = notes.frequencies[note] / 2
 
     # generate samples, note conversion to float32 array
     samples = (np.sin(2 * np.pi * np.arange(fs * duration) * f / fs)).astype(np.float32)
@@ -22,7 +22,7 @@ def play_note(note, stream):
 
 if __name__ == "__main__":
 
-    scale = scales.scale(noteslib.Note("A"), "pentatonic")
+    scale = scales.scale(notes.Note("A"), "pentatonic")
 
     p = pyaudio.PyAudio()
     stream = p.open(format=pyaudio.paFloat32, channels=1, rate=fs, output=True)

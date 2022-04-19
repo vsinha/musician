@@ -1,4 +1,4 @@
-import noteslib
+import notes
 
 scales = {
     "major": "WWHWWWH",
@@ -10,7 +10,7 @@ scales = {
 }
 
 
-def scale(root: noteslib.Note, which_scale):
+def scale(root: notes.Note, which_scale):
     steps = scales[which_scale]
     increments = []
 
@@ -34,13 +34,13 @@ def scale(root: noteslib.Note, which_scale):
     # starting at the root
     id = root.id
 
-    notes = [root]
+    scale = [root]
     for increment in increments:
         id = id + increment
-        notes.append(noteslib.Note.of_id(id))
+        scale.append(notes.Note.of_id(id))
 
     # we want our scale to not re-include the note we started with
     # TODO maybe we do want the root one octave up... idk yet
-    notes = notes[:-1]
+    scale = scale[:-1]
 
-    return notes
+    return scale
