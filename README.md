@@ -10,10 +10,8 @@ pip3 install pyaudio numpy scipy
 # Run
 
 ```
-# try
-python play.py   # play a scale
-python say.py    # say random notes in english
-python tone.py   # play some notes
+# play some simple music
+python play_audio.py
 
 # test
 python -m unittest discover
