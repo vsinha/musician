@@ -4,7 +4,7 @@ import operator
 import numpy as np
 import pyaudio
 from notes import Note
-import scales
+from scales import scale
 import chords
 from scipy import interpolate
 from operator import itemgetter
@@ -41,6 +41,7 @@ def harmonics2(freq, length):
 
 
 def pluck1(note, length=1.0):
+    print(note, note.frequency())
     chunk = harmonics1(note.frequency(), length)
     return shape(chunk, {0.0: 0.0, 0.005: 1.0, 0.25: 0.5, 0.9: 0.1, 1.0: 0.0})
 
@@ -53,39 +54,3 @@ def pluck2(note, length=1.0):
 def chord(notes, length):
     freqs = [sine(note.frequency(), length, 44100) for note in notes]
     return functools.reduce(operator.add, freqs) * 0.2
-
-
-def play_scale_batch():
-    root = Note("A", 3)
-    scale = scales.scale(root, "major")
-
-    chunks = []
-
-    for note in scale:
-        c = chord(chords.chord(note, "major"), length=0.5)
-        chunks.append(c)
-
-    chunk = np.concatenate(chunks) * 0.25
-    p = pyaudio.PyAudio()
-    stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=True)
-    stream.write(chunk.astype(np.float32).tobytes())
-    stream.close()
-    p.terminate()
-
-
-def play_scale_unbatched():
-    root = Note("A", 3)
-    scale = scales.scale(root, "major")
-
-    p = pyaudio.PyAudio()
-    stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=True)
-
-    for note in scale:
-        chunk = pluck1(note, length=0.25)
-        stream.write(chunk.astype(np.float32).tobytes())
-
-    stream.close()
-    p.terminate()
-
-
-play_scale_unbatched()

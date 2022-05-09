@@ -17,6 +17,7 @@ class Test(unittest.TestCase):
         self.assertEqual(Note("D#2").octave, 2)
 
         self.assertEqual(Note("D#5").octave, 5)
+        self.assertEqual(Note("D#", octave=5).octave, 5)
 
     def test_index_to_note(self):
         self.assertEqual(Note(0), "C4")

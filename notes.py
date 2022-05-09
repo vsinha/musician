@@ -55,9 +55,11 @@ class Note:
     def __init__(self, name, octave=4):
         self.octave = octave
         if isinstance(name, str):
-            self.name, self.index, self.octave = Note.parse_note_name_to_name_id_octave(
-                name
-            )
+            self.name, self.index, octave = Note.parse_note_name_to_name_id_octave(name)
+
+            if any(chr.isdigit() for chr in name):
+                self.octave = octave
+
         elif isinstance(name, int):
             self.name = Note.id_to_name(name)
             self.index = name
