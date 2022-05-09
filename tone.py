@@ -41,7 +41,6 @@ def harmonics2(freq, length):
 
 
 def pluck1(note, length=1.0):
-    print(note, note.frequency())
     chunk = harmonics1(note.frequency(), length)
     return shape(chunk, {0.0: 0.0, 0.005: 1.0, 0.25: 0.5, 0.9: 0.1, 1.0: 0.0})
 

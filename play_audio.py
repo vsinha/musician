@@ -1,3 +1,4 @@
+import random
 import numpy as np
 import pyaudio
 from notes import Note
@@ -76,9 +77,27 @@ def play_scale_unbatched():
 
 audio = Audio()
 notes = []
-for note in scale(Note("A", octave=3), "major")[:-1]:
-    notes.append(pluck1(note, length=0.25))
-for note in scale(Note("A", octave=4), "major"):
-    notes.append(pluck1(note, length=0.25))
+root = Note("A", octave=3)
+scale_notes = scale(root, "pentatonic")
+for bar in range(0, 16):
+    if bar % 2 == 0:
+        bar_notes = [
+            (root, 0.5),
+            (random.choice(scale_notes), 0.25),
+            (random.choice(scale_notes), 0.25),
+        ]
+    else:
+        bar_notes = [
+            (random.choice(scale_notes), 0.25),
+            (random.choice(scale_notes), 0.25),
+            (random.choice(scale_notes), 0.25),
+            (random.choice(scale_notes), 0.25),
+        ]
+
+    print(bar_notes)
+    for note, time in bar_notes:
+        notes.append(pluck1(note, time))
+    notes.append(pluck1(root, 0.5))
+
 audio.queue(notes)
 audio.play()
